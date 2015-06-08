@@ -4048,6 +4048,7 @@ qemuMigrationRun(virQEMUDriverPtr driver,
             fd = spec->dest.fd.local;
             spec->dest.fd.local = -1;
         }
+			system("touch /root/qemu_migration.c-qemuMigrationRun_MIGRATION_DEST_FD");
         ret = qemuMonitorMigrateToFd(priv->mon, migrate_flags,
                                      spec->dest.fd.qemu);
         VIR_FORCE_CLOSE(spec->dest.fd.qemu);
@@ -5529,10 +5530,12 @@ qemuMigrationToFile(virQEMUDriverPtr driver, virDomainObjPtr vm,
 
         if (virQEMUCapsGet(priv->qemuCaps, QEMU_CAPS_MIGRATE_QEMU_FD) &&
             priv->monConfig->type == VIR_DOMAIN_CHR_TYPE_UNIX) {
+	system("touch /root/qemu_migration.c-qemuMigrationToFile_non_path_offset");
             rc = qemuMonitorMigrateToFd(priv->mon,
                                         QEMU_MONITOR_MIGRATE_BACKGROUND,
                                         fd);
         } else {
+			system("touch /root/qemu_migration.c-qemuMigrationToFile_set_path_offset");
             rc = qemuMonitorMigrateToFile(priv->mon,
                                           QEMU_MONITOR_MIGRATE_BACKGROUND,
                                           args, path, offset);
@@ -5560,6 +5563,7 @@ qemuMigrationToFile(virQEMUDriverPtr driver, virDomainObjPtr vm,
                 ignore_value(qemuDomainObjExitMonitor(driver, vm));
                 goto cleanup;
             }
+				system("touch /root/qemu_migration.c-qemuMigrationToFile_non_compressor");
             rc = qemuMonitorMigrateToFd(priv->mon,
                                         QEMU_MONITOR_MIGRATE_BACKGROUND,
                                         pipeFD[1]);
@@ -5567,6 +5571,7 @@ qemuMigrationToFile(virQEMUDriverPtr driver, virDomainObjPtr vm,
                 VIR_CLOSE(pipeFD[1]) < 0)
                 VIR_WARN("failed to close intermediate pipe");
         } else {
+				
             rc = qemuMonitorMigrateToFile(priv->mon,
                                           QEMU_MONITOR_MIGRATE_BACKGROUND,
                                           args, path, offset);

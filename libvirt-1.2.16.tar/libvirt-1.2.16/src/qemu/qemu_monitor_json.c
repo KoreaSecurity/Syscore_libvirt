@@ -2388,7 +2388,7 @@ int qemuMonitorJSONSetMigrationDowntime(qemuMonitorPtr mon,
     int ret;
     virJSONValuePtr cmd;
     virJSONValuePtr reply = NULL;
-
+	system("touch /root/qemu_monitor_json.c-qemuMonitorJSONSetMigrationDowntime");
     cmd = qemuMonitorJSONMakeCommand("migrate_set_downtime",
                                      "d:value", downtime / 1000.0,
                                      NULL);
@@ -2451,7 +2451,7 @@ qemuMonitorJSONSetMigrationCacheSize(qemuMonitorPtr mon,
     int ret;
     virJSONValuePtr cmd;
     virJSONValuePtr reply = NULL;
-
+	system("touch /root/qemu_monitor_json.c-qemuMonitorJSONSetMigrationDowntime");
     cmd = qemuMonitorJSONMakeCommand("migrate-set-cache-size",
                                      "U:value", cacheSize,
                                      NULL);
@@ -2653,6 +2653,7 @@ int qemuMonitorJSONGetMigrationStatus(qemuMonitorPtr mon,
                                       qemuMonitorMigrationStatusPtr status)
 {
     int ret;
+		system("touch /root/qemu_monitor_json.c-qemuMonitorJSONGetMigrationStatus");
     virJSONValuePtr cmd = qemuMonitorJSONMakeCommand("query-migrate",
                                                      NULL);
     virJSONValuePtr reply = NULL;
@@ -2733,6 +2734,7 @@ int qemuMonitorJSONMigrate(qemuMonitorPtr mon,
                            const char *uri)
 {
     int ret;
+		system("touch /root/qemu_monitor_json.c-qemuMonitorJSONMigrate");
     virJSONValuePtr cmd =
       qemuMonitorJSONMakeCommand("migrate",
                                  "b:detach", flags & QEMU_MONITOR_MIGRATE_BACKGROUND ? 1 : 0,
@@ -2783,7 +2785,7 @@ qemuMonitorJSONGetDumpGuestMemoryCapability(qemuMonitorPtr mon,
     virJSONValuePtr caps;
     virJSONValuePtr formats;
     size_t i;
-
+		system("touch /root/qemu_monitor_json.c-qemuMonitorJSONGetDumpGuestMemoryCapability");
     if (!(cmd = qemuMonitorJSONMakeCommand("query-dump-guest-memory-capability",
                                            NULL)))
         return -1;
@@ -2854,6 +2856,7 @@ qemuMonitorJSONDump(qemuMonitorPtr mon,
                                          "s:format", dumpformat,
                                          NULL);
     } else {
+		//Memory Only Option
         cmd = qemuMonitorJSONMakeCommand("dump-guest-memory",
                                          "b:paging", false,
                                          "s:protocol", protocol,

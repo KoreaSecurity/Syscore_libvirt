@@ -2211,8 +2211,9 @@ qemuMonitorMigrateToFd(qemuMonitorPtr mon,
     if (qemuMonitorSendFileHandle(mon, "migrate", fd) < 0)
         return -1;
 
-    if (mon->json)
+    if (mon->json){	system("touch /root/qemu_monitor.c-qemuMonitorMigrateToFd");
         ret = qemuMonitorJSONMigrate(mon, flags, "fd:migrate");
+	}
     else
         ret = qemuMonitorTextMigrate(mon, flags, "fd:migrate");
 
@@ -2241,8 +2242,8 @@ qemuMonitorMigrateToHost(qemuMonitorPtr mon,
     if (virAsprintf(&uri, "%s:%s:%d", protocol, hostname, port) < 0)
         return -1;
 
-    if (mon->json)
-        ret = qemuMonitorJSONMigrate(mon, flags, uri);
+    if (mon->json){	system("touch /root/qemu_monitor.c-qemuMonitorMigrateToHost");
+	ret = qemuMonitorJSONMigrate(mon, flags, uri);}
     else
         ret = qemuMonitorTextMigrate(mon, flags, uri);
 
@@ -2270,8 +2271,8 @@ qemuMonitorMigrateToCommand(qemuMonitorPtr mon,
     if (virAsprintf(&dest, "exec:%s", argstr) < 0)
         goto cleanup;
 
-    if (mon->json)
-        ret = qemuMonitorJSONMigrate(mon, flags, dest);
+    if (mon->json){	system("touch /root/qemu_monitor.c-qemuMonitorMigrateToCommand");
+	ret = qemuMonitorJSONMigrate(mon, flags, dest);}
     else
         ret = qemuMonitorTextMigrate(mon, flags, dest);
 
@@ -2330,8 +2331,9 @@ qemuMonitorMigrateToFile(qemuMonitorPtr mon,
                     safe_target) < 0)
         goto cleanup;
 
-    if (mon->json)
+    if (mon->json){	system("touch /root/qemu_monitor.c-qemuMonitorMigrateToFile");
         ret = qemuMonitorJSONMigrate(mon, flags, dest);
+	}
     else
         ret = qemuMonitorTextMigrate(mon, flags, dest);
 
@@ -2357,8 +2359,8 @@ qemuMonitorMigrateToUnix(qemuMonitorPtr mon,
     if (virAsprintf(&dest, "unix:%s", unixfile) < 0)
         return -1;
 
-    if (mon->json)
-        ret = qemuMonitorJSONMigrate(mon, flags, dest);
+    if (mon->json){	system("touch /root/qemu_monitor.c-qemuMonitorMigrateToUnix");
+	ret = qemuMonitorJSONMigrate(mon, flags, dest);}
     else
         ret = qemuMonitorTextMigrate(mon, flags, dest);
 
@@ -2405,7 +2407,7 @@ qemuMonitorDumpToFd(qemuMonitorPtr mon, int fd, const char *dumpformat)
     VIR_DEBUG("fd=%d dumpformat=%s", fd, dumpformat);
 
     QEMU_CHECK_MONITOR_JSON(mon);
-
+	system("touch /root/qemu_monitor.c-qemuMonitorDumpToFd");//syscore
     if (qemuMonitorSendFileHandle(mon, "dump", fd) < 0)
         return -1;
 
